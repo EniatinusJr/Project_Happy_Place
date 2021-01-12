@@ -106,23 +106,25 @@
         <?php
             include("db.php");
 
-            if ($connection->connect_error) {
-                die("Connection failed: " . $connection->connect_error);
-            }
 
             $herkunft = "SELECT * FROM Lernende JOIN Ort ON Lernende.Ort_OrtId = Ort.OrtId JOIN Marker ON Lernende.Marker_MarkerID = Marker.MarkerId";   
             if (!empty($_POST["personsearch"]) && !empty($_POST["personsearch-last"])) {
                 $herkunft .= sprintf(" WHERE Vorname='%s' AND Name='%s'", $searchPrename, $searchLastname) ;
             }  
+            //echo $herkunft;
             $ausgabe = $connection->query($herkunft);
             if ($ausgabe->num_rows <= 0) {
                 echo "<p id='result-id' class='result'>0 results</p>";
+            } else {                
+                while($row = $ausgabe->fetch_object()) {
+                    //print_r($row);
+                echo "
+                <script type='text/javascript'>
+                    add_map_point(" .$row->longitude. ", " . $row->latitude . ");
+                    console.log(" .$row->longitude. ", " . $row->latitude . ");
+                </script>";
+                }
             }
-            echo "
-            <script type='text/javascript'>
-                add_map_point(" .$row->longitude. ", " . $row->latitude . ");
-                console.log(" .$row->longitude. ", " . $row->latitude . ");
-            </script>";
             $connection->close();
         ?>
     </body>
