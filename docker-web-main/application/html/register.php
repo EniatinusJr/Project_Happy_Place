@@ -10,7 +10,7 @@
     <form action="register.php" method="POST">
         <input type="text" name="username" placeholder="Username"><br>
         <input type="text" name="pwd" placeholder="Password"><br>
-        <button name="button">Sign up</button>
+        <button type="submit" name="button" onclick="location.href='Sign_in.php'">Sign up</button>
     </form>
     <?php
     $servername = "mariadb";
@@ -21,7 +21,7 @@
     // Create connection
     $connection = new mysqli($servername, $username, $password, $dbname);
     // Check connection
-    if ($conn->connect_error) {
+    if ($connection->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
     if(isset($_POST["button"])){
@@ -35,8 +35,8 @@
         }
         
         $connection->close();
+        header("Location: Sign_in.php");
     }
-    $connection->close();
     ?>
 </body>
 </html>
