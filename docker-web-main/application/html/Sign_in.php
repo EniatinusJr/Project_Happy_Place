@@ -13,26 +13,17 @@
         <button type="submit" name="button" onclick="location.href='userlist.php'">Sign in</button>
     </form>
     <?php
-    $servername = "mariadb";
-    $username = "root";
-    $password = "happyplace";
-    $dbname = "happyplace";
-    
-    // Create connection
-    $connection = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($connection->connect_error) {
-        die("Connection failed: " . $connection->connect_error);
-    }
+    $parameter = $_GET["id"];
+    $parameter = $database->escape($parameter);
+    require_once("database.class.php");
+    $database = new Database("mariadb", "root", "happyplace", "happyplace");
 
     $sqlusr = "select username from users";
     $sqlpwd = "select password from users";
-    if(isset($_POST["button"])){
-        if ($sqlusr == 'username' and $sqlpwd == 'pwd'){
-            header("Locatioin: userlist.php");
-        } else{
-            echo ("BIG FAIL");
-        }
+    $query = "SELECT username FROM users WHERE id = 1";
+    $result = $database->query($query);
+    while($row = mysqli_fetch_assoc($result)) {
+        echo "Name: " . $row["name"];
     }
     ?>
 </body>

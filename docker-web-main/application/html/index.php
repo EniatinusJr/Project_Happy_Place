@@ -105,7 +105,10 @@
             }
         </script>
         <?php
-            include("db.php");
+            $parameter = $_GET["id"];
+            $parameter = $database->escape($parameter);
+            require_once("database.class.php");
+            $database = new Database("mariadb", "root", "happyplace", "happyplace");
 
 
             $herkunft = "SELECT * FROM Lernende JOIN Ort ON Lernende.Ort_OrtId = Ort.OrtId JOIN Marker ON Lernende.Marker_MarkerID = Marker.MarkerId";   

@@ -13,20 +13,15 @@
         <button type="submit" name="button" onclick="location.href='Sign_in.php'">Sign up</button>
     </form>
     <?php
-    $servername = "mariadb";
-    $username = "root";
-    $password = "happyplace";
-    $dbname = "happyplace";
-    
-    // Create connection
-    $connection = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($connection->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    $parameter = $_GET["id"];
+    $parameter = $database->escape($parameter);
+    require_once("database.class.php");
+    $database = new Database("mariadb", "root", "happyplace", "happyplace");
+
     if(isset($_POST["button"])){
-        $sql = "INSERT INTO users (username, password)
-        VALUES ('username', 'pwd')";
+        query($query);
+        $query = "INSERT INTO users (username, password) VALUES ('username', 'pwd');";
+        $database->query($query);
         
         if ($connection->query($sql) === TRUE) {
             echo "New record created successfully";
