@@ -13,8 +13,6 @@
         <button type="submit" name="button" onclick="location.href='userlist.php'">Sign in</button>
     </form>
     <?php
-    $parameter = $_GET["id"];
-    $parameter = $database->escape($parameter);
     require_once("database.class.php");
     $database = new Database("mariadb", "root", "happyplace", "happyplace");
 

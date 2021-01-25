@@ -105,8 +105,6 @@
             }
         </script>
         <?php
-            $parameter = $_GET["id"];
-            $parameter = $database->escape($parameter);
             require_once("database.class.php");
             $database = new Database("mariadb", "root", "happyplace", "happyplace");
 
