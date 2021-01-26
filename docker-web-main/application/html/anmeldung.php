@@ -1,5 +1,5 @@
 <?php
-require_once "sign_instanz.php";
+require_once "anmeldungsinstanz.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +10,7 @@ require_once "sign_instanz.php";
     <title>Sign in</title>
 </head>
 <body>
-    <form action="Sign_in.php" method="POST">
+    <form action="anmeldung.php" method="POST">
         <input type="text" name="username" placeholder="Username"><br>
         <input type="text" name="pwd" placeholder="Password"><br>
         <button type="submit" name="button" onclick="location.href='userlist.php'">Sign in</button>

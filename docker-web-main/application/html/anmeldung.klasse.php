@@ -1,6 +1,6 @@
 <?php
 require_once "database.php";
-class sign_in{
+class anmeldung{
 
 
     public function __constructor($username, $pwd){
