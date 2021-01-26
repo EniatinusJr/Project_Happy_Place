@@ -6,6 +6,7 @@ require_once "data.php";
 <html lang="en">
 
 <head>
+<link rel="icon" type="image/png" sizes="32x32" href="./icons/earth-globe-with-continents-maps.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" type="text/css">
 <style>
     * {
@@ -36,27 +37,23 @@ require_once "data.php";
     }
 </style>
 <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
-<title>ol example</title>
+<title>Project Happy Place</title>
 </head>
 
 <body>
 <div id="map" class="map"></div>
 <form method="POST" action="insert.php">
     <div>
-    <label for="prename">Prename</label>
-    <input id="prename" name="prename" />
+    <label for="Vorname">Prename</label>
+    <input id="Vorname" name="Vorname" />
     </div>
     <div>
-    <label for="lastname">Lastname</label>
-    <input id="lastname" name="lastname" />
+    <label for="Name">Lastname</label>
+    <input id="Name" name="Name" />
     </div>
     <div>
-    <label for="lat">Latitude</label>
-    <input id="lat" name="lat" />
-    </div>
-    <div>
-    <label for="lng">Longitude</label>
-    <input id="lng" name="lng" />
+    <label for="Ort">Ortschaft</label>
+    <input id="Ort" name="Ort" />
     </div>
     <button type="submit">Add Marker</button>
 </form>
@@ -85,7 +82,7 @@ require_once "data.php";
         anchor: [0.5, 46],
         anchorXUnits: 'fraction',
         anchorYUnits: 'pixels',
-        src: './marker.png'
+        src: './icon/chevron_down.svg'
         })
     })
     })

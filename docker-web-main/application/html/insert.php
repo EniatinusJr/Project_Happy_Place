@@ -2,8 +2,8 @@
 require_once 'marker.class.php';
 require_once 'database.php';
 
-if (isset($_REQUEST['lat']) && isset($_REQUEST['lng']) && isset($_REQUEST['prename']) && isset($_REQUEST['lastname'])) {
-  $newMarker = new Marker($_REQUEST['lat'], $_REQUEST['lng'], $_REQUEST['prename'], $_REQUEST['lastnae']);
+if (isset($_REQUEST['Vorname']) && isset($_REQUEST['Name']) && isset($_REQUEST['Ort'])) {
+  $newMarker = new Marker($_REQUEST['Vorname'], $_REQUEST['Name'], $_REQUEST['Ort']);
   $newMarker->create($connection);
 }
 

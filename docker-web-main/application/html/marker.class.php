@@ -2,57 +2,65 @@
 
 class Marker
 {
-  public $id;
-  public $lat;
-  public $lng;
-  public $prename;
-  public $lastname;
-
-  public function __construct($prename, $lastname, $lat, $lng, $id = null)
+  public $Ort;
+  public $latitude;
+  public $longitude;
+  public $Vorname;
+  public $Name;
+  
+  public function __construct($Vorname, $Name, $Ort)
   {
-    $this->prename = $prename;
-    $this->lastname = $lastname;
-    $this->lat = $lat;
-    $this->lng = $lng;
-    $this->id = $id;
+    $this->Vorname = $Vorname;
+    $this->Name = $Name;
+    $this->Ort = $Ort;
+  }
+
+  public function setCoordinate($lat, $lng) 
+  {
+    $this->latitude = $lat;
+    $this->longitude = $lng;
   }
 
   public function toJson()
   {
     return json_encode([
-      "id" => $this->id,
-      "lat" => $this->lat,
-      "lng" => $this->lng,
-      "prename" => $this->prename,
-      "lastname" => $this->lastname
+      "Ort" => $this->Ort,
+      "lat" => $this->latitude,
+      "lng" => $this->longitude,
+      "Vorname" => $this->Vorname,
+      "Name" => $this->Name
     ]);
   }
 
   public function create($connection)
   {
-    $lat = $connection->real_escape_string($this->lat);
-    $lng = $connection->real_escape_string($this->lng);
-    $prename = $connection->real_escape_string($this->prename);
-    $lastname = $connection->real_escape_string($this->lastname);
-    $coordsla = "SELECT latitude FROM `Ort`";
-    $coordslo = "SELECT longitude FROM `Ort`";
-
-    if($coordsla == $lat && $coordslo == $lng){
-      $sql = "INSERT INTO `Lernende` (Vorname, Name) VALUES ('$prename', '$lastname');";
-      $placeid = "SELECT OrtID FROM `Ort` WHERE latitude = $lat AND longitude = $lng";
-      $place = "INSERT INTO `Lernende` (OrtID) VALUES ('$placeid')";
-    }
-
+    $Ort = $connection->real_escape_string($this->Ort);
+    $Vorname = $connection->real_escape_string($this->Vorname);
+    $Name = $connection->real_escape_string($this->Name);
+    $sql = "SELECT OrtID,latitude,longitude FROM `Ort` WHERE Ort = '$Ort' LIMIT 1";
     $result = $connection->query($sql);
+    $placesFromDatabase = $result->fetch_all(MYSQLI_ASSOC);
+    foreach ($placesFromDatabase as $place) {
+      ($place);
+      $OrtID = $place['OrtID'];
+      $lat = $place['latitude'];
+      $lng = $place['longitude'];
+    }
+    if($OrtID > 0){
 
-    if (!$result) {
-      die($connection->error);
+      $sql = "INSERT INTO `Lernende` (Vorname, Name, Ort_OrtID) VALUES ('$Vorname', '$Name', $OrtID);";
+
+      $result = $connection->query($sql);
+
+      if (!$result) {
+        die($connection->error);
+      }
     }
   }
 
   public static function fetchAll($connection)
   {
-    $sql = "SELECT * FROM `Lernende`";
+    $sql = "SELECT * FROM `Lernende` JOIN Ort ON Lernende.Ort_OrtID = Ort.OrtID";
     $result = $connection->query($sql);
 
     if (!$result) {
@@ -63,7 +71,10 @@ class Marker
     $markers = [];
 
     foreach ($markersFromDatabase as $marker) {
-      $markers[] = new Marker($marker['id'], $marker['lat'], $marker['lng'], $marker['prename'], $marker['lastname']);
+      //print_r($marker);
+      $poi = new Marker($marker['Vorname'], $marker['Name'], $marker['Ort']); 
+      $poi->setCoordinate($marker['latitude'], $marker['longitude']);
+      $markers[] = $poi;
     }
 
     return $markers;
