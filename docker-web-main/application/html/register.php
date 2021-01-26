@@ -15,7 +15,7 @@ require_once "instanz.php";
         <input type="text" name="lastname" placeholder="Lastname"><br>
         <input type="text" name="username" placeholder="Username"><br>
         <input type="text" name="pwd" placeholder="Password"><br>
-        <button type="submit" name="button" onclick="location.href='Sign_in.php'">Sign up</button>
+        <button type="submit" name="button" onclick="location.href='anmeldung.php'">Sign up</button>
     </form>
 </body>
 </html>
