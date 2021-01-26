@@ -7,38 +7,38 @@
     <title>PHP CRUD: Overview</title>
 </head>
 <body>
-
+aölkdfjalskdjflkajfdlökjfd
     <?php
-
-    require_once("database.class.php");
-    $database = new Database("mariadb", "root", "happyplace", "happyplace");
+    
+    //require_once("database.class.php");
+    //$database = new Database("mariadb", "root", "happyplace", "happyplace");
 
     /**
      * Generate an entity object that provide CRUD operation for a database table.
      *
      * @author   Fabian Dennler <fd@fabforge.ch>
      */
-    
+/*
     class Entity
     {
         private $connection = '';
         private $table = '';
         public $columns;
         public $data = array();
-        
+*/
         /* @param string $table The name of the table to generate code for. */
-        public function __construct($link, $table)
+        /*public function __construct($link, $table)
         {
             $this->connection = $link;
             $this->table = $table;
             $this->describe();
         }
         
-        
+*/        
         /**
          * Get the data definition for the requested table.
          */
-
+/*
         private function describe()
         {
             try {
@@ -60,7 +60,7 @@
                 throw $e;
             }
         }
-        
+*/        
         /**
    * Load the record from Database where id = $id
    *
@@ -68,7 +68,7 @@
    *
    * @return $entity entity loaded
    */
-    public function load($id)
+/*    public function load($id)
     {
         try {
         $statement = $this->connection->prepare("SELECT * FROM " . $this->table . " WHERE id=?");
@@ -82,7 +82,7 @@
         throw $e;
         }
     }
-
+*/
     /**
      * Fetch all records from Database that match the given filter
      *
@@ -90,7 +90,7 @@
      *
      * @return $entities Entities matching filter
      */
-    public function fetch($filter = "")
+/*    public function fetch($filter = "")
     {
         try {
         $sql = sprintf("SELECT * FROM " . $this->table);
@@ -106,7 +106,7 @@
         throw $e;
         }
     }
-
+*/
     /**
      * Delete the record from Database where id = $id
      *
@@ -114,7 +114,7 @@
      *
      * @return $entity entity loaded
      */
-    public function delete($id)
+/*    public function delete($id)
     {
         try {
         $statement = $this->connection->prepare("DELETE * FROM " . $this->table . " WHERE id=?");
@@ -127,7 +127,7 @@
         }
     }
 
-
+*/
     /**
      * Save a record to Database
      *
@@ -135,7 +135,7 @@
      *
      * @return $entity entity saved
      */
-    public function save($entity)
+/*    public function save($entity)
     {
         $this->prepare($entity);
         // if an entity id is set, we update the record
@@ -169,13 +169,13 @@
         throw $e;
         }
     }
-
+*/
     /**
      * Prepare the data of this entity for save (INSERT OR UPDATE)
      *
      * @return void
      */
-    private function prepare($entity)
+/*    private function prepare($entity)
     {
         foreach ($this->columns as $column => $details) {
         if (!empty($entity->$column)) {
@@ -184,7 +184,7 @@
         }
     }
     
-
+*/
     /**
      * Set an entity variable.
      * Is run when writing data to inaccessible
@@ -195,7 +195,7 @@
      *
      * @return void
      */
-    public function __set($name, $value)
+/*    public function __set($name, $value)
     {
         if (isset($this->columns[$name])) {
         $this->$name = $value;
@@ -211,7 +211,7 @@
         }
     }
 
-
+*/
     /**
      * Get an entity variable.
      * Is utilized for reading data from inaccessible
@@ -221,7 +221,7 @@
      *
      * @return Value of the variables
      */
-    public function __get($name)
+/*    public function __get($name)
     {
         if (!empty($this->$name)) {
         return $this->$name;
@@ -240,6 +240,8 @@
     
 
     $users = new Entity($link, "users");
+    
+*/
     ?>
 </body>
 </html>
