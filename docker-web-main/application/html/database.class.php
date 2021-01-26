@@ -9,8 +9,8 @@
 
 class Database
 {
-    private $host, $database, $username, $password, $connection;
-    private $port = 8083;
+    public $host, $database, $username, $password, $connection;
+    public $port = 8083;
 
     /**
      * Sets the connection credentials to connect to your database.

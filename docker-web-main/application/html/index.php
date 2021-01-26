@@ -1,133 +1,109 @@
+<?php
+require_once "data.php";
+
+?>
 <!doctype html>
 <html lang="en">
-    <head>
-        <link rel="icon" type="image/png" sizes="32x32" href="./icons/earth-globe-with-continents-maps.png">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" type="text/css">
-        <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-        .map {
-            height: 100vh;
-            width: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: -9;
-        }
-        table {
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        button {
-            width: 200px;
-            background-color: #BEBEBE;
-        }
-        .name {
-            border: white;
-            background-color: #BEBEBE;
-        }
-        </style>
-        <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
-        <title>Project Happy Place</title>
-    </head>
-    <body>
-        <?php
-        if (!empty($_POST["personsearch"]) && !empty($_POST["personsearch-last"])) {
-            $searchPrename = $_POST["personsearch"];
-            $searchLastname = $_POST["personsearch-last"];
-        } else {
-            $searchPrename = '';
-            $searchLastname = '';
-        }
-        ?>
-        <form action="index.php" method="POST">
-            <input type="text" name="personsearch" placeholder="Firstname" value="<?php echo ($searchPrename); ?>">
-            <input type="text" name="personsearch-last" placeholder="Lastname" value="<?php echo ($searchLastname); ?>">
-            <button type="submit" name="submit-search">search</button>
-        </form>
-        <!-- <input type="number" step="any" name="lat" placeholder="Latitude" value="<?php echo($_POST["latitude"]);?>">
-            <input type="number" step="any"  name="long" placeholder="Longitude" value="<?php echo($_POST["longitude"]);?>"> -->
-        <div id="map" class="map"></div>
-        <script type="text/javascript">
-        var map = new ol.Map({
-            target: 'map',
-            layers: [
-            new ol.layer.Tile({
-                /*
-                ["http://a.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png","http://b.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png","http://c.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png"]
-                ["http://a.tile3.opencyclemap.org/landscape/{z}/{x}/{y}.png","http://b.tile3.opencyclemap.org/landscape/{z}/{x}/{y}.png","http://c.tile3.opencyclemap.org/landscape/{z}/{x}/{y}.png"]
-                ["http://a.tile.openstreetmap.org/{z}/{x}/{y}.png","http://b.tile.openstreetmap.org/{z}/{x}/{y}.png","http://c.tile.openstreetmap.org/{z}/{x}/{y}.png"]
-                ["http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png","http://otile2.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png","http://otile3.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png","http://otile4.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png"]
-                ["http://a.tile.stamen.com/watercolor/{z}/{x}/{y}.png","http://b.tile.stamen.com/watercolor/{z}/{x}/{y}.png","http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.png","http://d.tile.stamen.com/watercolor/{z}/{x}/{y}.png"]
-                ["http://a.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png","http://b.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png","http://c.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png"]
-                */
-                source: new ol.source.XYZ({
-                    urls : ["http://a.tile.openstreetmap.org/{z}/{x}/{y}.png","http://b.tile.openstreetmap.org/{z}/{x}/{y}.png","http://c.tile.openstreetmap.org/{z}/{x}/{y}.png"]
-                })
 
-                /*source: new ol.source.OSM()*/
-            }),
-            /*new ol.layer.Vector({
-                source: new ol.source.Vector({
-                format: new ol.format.GeoJSON(),
-                url: './assets/data/countries.geojson' // GeoCountries file from github
-                })
-            })*/
-            ],
-            view: new ol.View({
-            center: ol.proj.fromLonLat([8.5208324, 47.360127]),
-            zoom: 10
-            })
-            });
-            function add_map_point(lng, lat) {
-            var vectorLayer = new ol.layer.Vector({
-                source: new ol.source.Vector({
-                features: [new ol.Feature({
-                    geometry: new ol.geom.Point(ol.proj.transform([parseFloat(lng), parseFloat(lat)], 'EPSG:4326', 'EPSG:3857')),
-                })]
-                }),
-                style: new ol.style.Style({
-                image: new ol.style.Icon({
-                    anchor: [0.5, 0.5],
-                    anchorXUnits: "fraction",
-                    anchorYUnits: "fraction",
-                    src: "http://localhost/icons/chevron_down.svg"
-                })
-                })
-            });
-            map.setView(new ol.View({
-                center: ol.proj.transform([lng, lat], 'EPSG:4326', 'EPSG:3857'),
-                zoom: 10
-            }));
-            map.addLayer(vectorLayer);
-            }
-        </script>
-        <?php
-            require_once("database.class.php");
-            $database = new Database("mariadb", "root", "happyplace", "happyplace");
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" type="text/css">
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    }
 
+    .map {
+    height: 100vh;
+    width: 100%;
+    }
 
-            $herkunft = "SELECT * FROM Lernende JOIN Ort ON Lernende.Ort_OrtId = Ort.OrtId JOIN Marker ON Lernende.Marker_MarkerID = Marker.MarkerId";   
-            if (!empty($_POST["personsearch"]) && !empty($_POST["personsearch-last"])) {
-                $herkunft .= sprintf(" WHERE Vorname='%s' AND Name='%s'", $searchPrename, $searchLastname) ;
-            }  
-            //echo $herkunft;
-            $ausgabe = $connection->query($herkunft);
-            if ($ausgabe->num_rows <= 0) {
-                echo "<p id='result-id' class='result'>0 results</p>";
-            } else {                
-                while($row = $ausgabe->fetch_object()) {
-                    //print_r($row);
-                echo "
-                <script type='text/javascript'>
-                    add_map_point(" .$row->longitude. ", " . $row->latitude . ");
-                    console.log(" .$row->longitude. ", " . $row->latitude . ");
-                </script>";
-                }
-            }
-            $connection->close();
-        ?>
-    </body>
+    form {
+    position: absolute;
+    padding: 1rem;
+    top: 0;
+    right: 0;
+    }
+
+    input {
+    display: block;
+    }
+
+    label {
+    display: block;
+    margin-top: .5rem;
+    font-size: .75rem;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+<title>ol example</title>
+</head>
+
+<body>
+<div id="map" class="map"></div>
+<form method="POST" action="insert.php">
+    <div>
+    <label for="prename">Prename</label>
+    <input id="prename" name="prename" />
+    </div>
+    <div>
+    <label for="lastname">Lastname</label>
+    <input id="lastname" name="lastname" />
+    </div>
+    <div>
+    <label for="lat">Latitude</label>
+    <input id="lat" name="lat" />
+    </div>
+    <div>
+    <label for="lng">Longitude</label>
+    <input id="lng" name="lng" />
+    </div>
+    <button type="submit">Add Marker</button>
+</form>
+<script type="text/javascript">
+    var markerPoints = [<?php
+                        foreach ($markers as $marker) {
+                        print $marker->toJson();
+                        print ",\n\n";
+                        }
+                        ?>];
+
+    var markers = [];
+
+    for (let marker of markerPoints) {
+    markers.push(new ol.Feature({
+        geometry: new ol.geom.Point(ol.proj.fromLonLat([marker.lng, marker.lat]))
+    }));
+    }
+
+    var markers = new ol.layer.Vector({
+    source: new ol.source.Vector({
+        features: markers
+    }),
+    style: new ol.style.Style({
+        image: new ol.style.Icon({
+        anchor: [0.5, 46],
+        anchorXUnits: 'fraction',
+        anchorYUnits: 'pixels',
+        src: './marker.png'
+        })
+    })
+    })
+
+    var map = new ol.Map({
+    target: 'map',
+    layers: [
+        new ol.layer.Tile({
+        source: new ol.source.OSM()
+        }),
+        markers
+    ],
+    view: new ol.View({
+        center: ol.proj.fromLonLat([8.5208324, 47.360127]),
+        zoom: 10
+    })
+    });
+</script>
+</body>
+
 </html>
