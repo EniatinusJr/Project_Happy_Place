@@ -18,14 +18,14 @@
             $places = "SELECT * FROM Ort ".
                     "WHERE ( latitude is NULL OR latitude='') " .
                     "AND ( longitude is NULL OR longitude='') " .
-                    "ORDER BY RAND() LIMIT 1;";
+                    "ORDER BY RAND() LIMIT 20;";
 
             if ($result = $connection->query($places)) {
                 while($row = $result->fetch_object()) {
                     $place_id = $row->OrtID;
                     $coord = nominatimCoordinates($row->Ort . ",Schweiz"); // Restrict to switzerland
                     //echo $coord;
-                    if ($place_id > 0) {
+                    if ((!empty($coord)) && ($place_id > 0)) {
                         $update = sprintf("UPDATE Ort SET %s WHERE OrtID=%d", $coord, $place_id);
                         //echo $update;
                         if(!$connection->query($update)) {
@@ -51,7 +51,7 @@
                 $referer   = "https://www.zli.ch";
 
                 $url = sprintf($base, $search);
-echo $url;
+//echo $url;
                 $curl = curl_init();
                 curl_setopt($curl, CURLOPT_URL, $url);
                 curl_setopt($curl, CURLOPT_USERAGENT, $agent);
