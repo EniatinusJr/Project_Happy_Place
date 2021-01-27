@@ -35,7 +35,7 @@ class register{
             }
             
             $connection->close();
-            header("Location: sign_in.php");
+            header("Location: anmeldung.php");
         }
     }
 }

@@ -11,8 +11,8 @@ require_once "anmeldungsinstanz.php";
 </head>
 <body>
     <form action="anmeldung.php" method="POST">
-        <input type="text" name="username" placeholder="Username"><br>
-        <input type="text" name="pwd" placeholder="Password"><br>
+        <input id="usrname" name="usrname" placeholder="Username"><br>
+        <input id="pwd" name="pwd" placeholder="Password"><br>
         <button type="submit" name="button" onclick="location.href='userlist.php'">Sign in</button>
     </form>
 </body>
