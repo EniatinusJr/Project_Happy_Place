@@ -1,5 +1,5 @@
 <?php
-require_once "database.php";
+
 /**
  * Generate an entity object that provide CRUD operation for a database table.
  *
@@ -118,7 +118,7 @@ class Entity
     public function delete($id)
     {
         try {
-        $statement = $this->connection->prepare("DELETE * FROM " . $this->table . " WHERE id=?");
+        $statement = $this->connection->prepare("DELETE FROM " . $this->table . " WHERE id=?");
         $statement->bind_param('d', $id);
         $result = $statement->execute();
         $statement->close();

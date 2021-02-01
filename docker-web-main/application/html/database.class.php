@@ -9,8 +9,8 @@
 
 class Database
 {
-    public $host, $database, $username, $password, $connection;
-    public $port = 8083;
+    private $host, $database, $username, $password, $connection;
+    private $port = 8083;
 
     /**
      * Sets the connection credentials to connect to your database.
@@ -69,5 +69,10 @@ class Database
     function escape($string)
     {
         return $this->connection->escape_string($string);
+    }
+
+
+    function getConnection() {
+        return $this->connection;
     }
 }
