@@ -6,6 +6,10 @@
     <title>Document</title>
 </head>
 <body>
-    i hate my life
+<?php
+        for ($index = 0; $index < 5 $index++) {
+            echo '<p style="color:#ff0000">hello world</p>';
+        }
+    ?>
 </body>
 </html>
