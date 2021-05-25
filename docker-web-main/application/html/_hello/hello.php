@@ -7,7 +7,7 @@
 </head>
 <body>
 <?php
-        for ($index = 0; $index < 5 $index++) {
+        for ($index = 0; $index < 5; $index++) {
             echo '<p style="color:#ff0000">hello world</p>';
         }
     ?>

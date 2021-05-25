@@ -1,3 +1,4 @@
+<doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,6 +7,13 @@
     <title>Document</title>
 </head>
 <body>
-    i hate my life
+    <?php
+        $dir = opendir('/thumbnails');
+        for (){
+            echo '<p>', readdir($dir)'</p>';
+        }
+
+        closedir($dir);
+    ?>
 </body>
 </html>
