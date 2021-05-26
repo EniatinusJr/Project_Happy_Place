@@ -8,12 +8,24 @@
 </head>
 <body>
     <?php
-        $dir = opendir('/thumbnails');
-        for (){
-            echo '<p>', readdir($dir)'</p>';
-        }
+        $dir = 'thumbnails';
+        $images = glob($dir.'/*.jpg');
 
-        closedir($dir);
+        $path = glob('images'.'/*.jpg');
+        $count = 0;
+        foreach($path as $link){
+            $img = $images[$count];
+            $count++;
+            echo "<a class = 'item' href =  bild.php?bild=" . $link . " target = '_blank'><img src = " . $img . " height = 200 width = 200></a>";
+            $text = substr($img,strlen($dir ) +1 );
+            $text = str_replace([".jpeg", ".jpg"], " ", $text);
+            $text = str_replace("ae", "ä", $text);
+            $text = str_replace("oe", "ö", $text);
+            $text = str_replace("ue", "ü", $text);
+            $text = str_replace([' ','-','&','_'], " ", $text);
+            $text = ucfirst($text);
+            echo"<p class = item >". $text ."</p>";
+        }
     ?>
 </body>
 </html>

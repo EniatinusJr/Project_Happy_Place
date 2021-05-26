@@ -1,0 +1,104 @@
+@charset "utf-8";
+/*	
+Witzweb, Navigation in einem Array
+05.11.2014, ps
+*/
+
+/* Allgemein */
+html{
+	height:101%;
+}
+body{
+	background-color:#0F0;
+	font-size:14px;
+	font-family:Verdana, Arial, sans-serif;
+	padding:0;
+	margin:0;
+}
+
+/* Wrapper */
+#wrapper{
+	width:960px;
+	margin:0 auto;
+	padding:0;
+	background-color:#CCC;
+	overflow:auto;
+}
+
+/* Kopf */
+header{
+	margin:0;
+	padding:10px 0;
+	background-color:#090;
+}
+header h1{
+	margin:0;
+	padding:0;
+	font-size:20px; 
+	font-weight:bold;
+	color:#CCC;
+	text-align:center;
+ }
+
+
+/* Navigation */
+nav{
+	float:left;
+	width:160px;
+	margin:0;
+	padding:0;
+}
+nav ul{
+	list-style-type:none ;
+	padding:0;
+	margin:0;
+}
+nav li{
+	margin:0;
+}
+nav li a{
+	font-size:16px;
+	font-weight:bold;
+	text-decoration:none; 
+	color:#060;
+	background-color:#9F9;
+	border-bottom:3px solid #FFF;
+	display:block;
+	text-indent:10px;
+	padding:5px 0;
+}
+nav li a:hover{
+	color:#333;
+	background-color:#6F9;
+}
+nav li a.unterkapitel{
+	text-indent:20px;
+}
+
+/* Inhalt */
+section{
+	float:left;
+	width:780px;
+	min-height:500px;
+	background-color:#FFF;
+	padding:10px;
+	margin:0;
+}
+section.zentriert{
+	text-align:center;
+}
+
+/* Fusszeile */
+footer{
+	clear:left;
+	background-color:#090;
+	padding:5px 0;
+	margin:0;
+}
+footer p{
+	margin:0;
+	padding:0;
+	font-size:12px; 
+	color:#FFF;
+	text-align:center;
+}
