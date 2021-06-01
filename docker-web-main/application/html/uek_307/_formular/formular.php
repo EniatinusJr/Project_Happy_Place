@@ -40,8 +40,8 @@
     </form>
     <?php
 
-        $vorname = $_GET['vorname'];
-        $nachname = $_GET['nachname'];
+        $vorname = strip_tags($_GET['vorname']);
+        $nachname = htmlspecialchars($_GET['nachname']);
         $wohnort = $_GET['wohnort'];
 
         echo '<p>'. $vorname .'<br>'. $nachname .'<br>'. $wohnort .'</p>';

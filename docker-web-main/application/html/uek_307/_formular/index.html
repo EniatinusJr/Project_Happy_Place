@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="formsend.php" method="POST">
+        <label for="name">
+            Name
+            <input type="text" name="name">
+        </label>
+        <br>
+        <label for="vorname">
+            Vorname
+            <input type="text" name="vorname">
+        </label>
+        <br>
+        <label for="email">
+            E-Mail
+            <input type="text" name="email">
+        </label>
+
+        <fieldset>
+            <legend>Ich bestelle Informationen zu</legend>
+            <label for="php">
+                <input type="checkbox" name="programmiersprache[]" value="PHP">
+                PHP
+            </label>
+            <br>
+            <label for="javascript">
+                <input type="checkbox" name="programmiersprache[]" value="JavaScript">
+                JavaScript
+            </label>
+            <br>
+            <label for="css">
+                <input type="checkbox" name="programmiersprache[]" value="CSS">
+                CSS
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>Ich abonniere den Newsletter</legend>
+            <label for="ja">
+                <input type="radio" name="newsletter" value="ja">
+                ja
+            </label>
+            <br>
+            <label for="nein">
+                <input type="radio" name="newsletter" value="nein">
+                nein
+            </label>
+        </fieldset>
+        <input type="submit" name="absenden" value="senden">
+    </form>
+</body>
+</html>
