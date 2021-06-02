@@ -1,4 +1,4 @@
-<doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,24 +8,32 @@
 </head>
 <body>
     <?php
-        $dir = 'thumbnails';
-        $images = glob($dir.'/*.jpg');
 
-        $path = glob('images'.'/*.jpg');
-        $count = 0;
-        foreach($path as $link){
-            $img = $images[$count];
-            $count++;
-            echo "<a class = 'item' href =  bild.php?bild=" . $link . " target = '_blank'><img src = " . $img . " height = 200 width = 200></a>";
-            $text = substr($img,strlen($dir ) +1 );
-            $text = str_replace([".jpeg", ".jpg"], " ", $text);
-            $text = str_replace("ae", "ä", $text);
-            $text = str_replace("oe", "ö", $text);
-            $text = str_replace("ue", "ü", $text);
-            $text = str_replace([' ','-','&','_'], " ", $text);
-            $text = ucfirst($text);
-            echo"<p class = item >". $text ."</p>";
+    $ersetzen1 = array('.jpeg' => '', '.jpg' => '', '_' => ' ');
+
+    $ersetzen2 = array('ae' => 'ä', 'oe' => 'ö', 'ue' => 'ü', 'Ae' => 'Ä', 'Oe' =>
+    'Ö', 'Ue' => 'Ü');
+
+    $dateien = scandir('../_gallery/thumbnails');
+
+    foreach ($dateien as $datei) {
+        if ( is_file('../_gallery/thumbnails/' . $datei) ) {
+            $text = strtr($datei, $ersetzen1);
+            $text = ucwords($text);
+            $text = strtr($text, $ersetzen2);
+
+            echo "<figure>\n";
+            echo "<a href=\"../_gallery/images/$datei\" target=\"bild\">\n";
+            echo "<img src=\"../_gallery/thumbnails/$datei\" alt=\"$text\">\n";
+            echo "</a>\n";
+            echo "<figcaption>\n";
+            echo "<p>$text</p>\n";
+            echo "</figcaption>\n";
+            echo "</figure>\n";
+            echo "<form>"
+            echo "<button type='reset' name='delete'>Löschen</button>";
         }
+    }
     ?>
 </body>
 </html>
